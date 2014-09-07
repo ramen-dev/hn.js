@@ -22,6 +22,12 @@ or the '/' path of the current domain has been shared on HN, it will popup a lit
 position, dismissable DIV in the top right corner of the page.
 
 
+## Building
+
+* Clone the repo
+* Install coffee: `npm install -g coffee-script`
+* Compile and watch hn.coffee: `coffee -w -c hn.coffee`
+
 ## Contribute
 
 Just fork and send a pull request!
