@@ -59,6 +59,16 @@
       return this.jsonp(url);
     };
 
+    Util.style = function(el, css) {
+      var key, val, _results;
+      _results = [];
+      for (key in css) {
+        val = css[key];
+        _results.push(el.style[key] = val);
+      }
+      return _results;
+    };
+
     Util.to_q = function(p) {
       var k, str, v;
       p || (p = {});
@@ -93,6 +103,22 @@
       this.current_string = this.current.hostname + this.current.pathname + this.current.search;
     }
 
+    HNjs.prototype.attach_ribbon = function() {
+      this.ribbon = document.createElement('a');
+      this.ribbon.href = "https://news.ycombinator.com/item?id=" + this.item.id;
+      this.ribbon.target = "_blank";
+      Util.style(this.ribbon, {
+        top: 0,
+        right: 0,
+        position: 'fixed',
+        display: 'block',
+        width: '150px',
+        height: '150px'
+      });
+      this.ribbon.innerHTML = '<img src="ribbon.gif">';
+      return document.body.appendChild(this.ribbon);
+    };
+
     HNjs.prototype.check_api = function() {
       return Util.request("http://api.ihackernews.com/page", {}, {
         callback: this.parse_api_response
@@ -108,7 +134,8 @@
         this.parser.href = item.url;
         str = this.parser.hostname + this.parser.pathname + this.parser.search;
         if (str === this.current_string) {
-          _results.push(alert('Rut oh!'));
+          this.item = item;
+          _results.push(this.attach_ribbon());
         } else {
           _results.push(console.log("nopies: " + item.url));
         }

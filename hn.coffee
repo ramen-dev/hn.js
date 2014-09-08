@@ -1,5 +1,4 @@
 class Util
-  
   @create_el: (name, attr) ->
     el = document.createElement(name)
     attr ||= {}
@@ -42,6 +41,10 @@ class Util
 
     @jsonp(url)
 
+  @style: (el, css) ->
+    for key, val of css
+      el.style[key] = val
+
   @to_q: (p) ->
     p ||= {}
     str = ""
@@ -65,6 +68,14 @@ class HNjs
     @current.href = window.location.href
     @current_string = @current.hostname + @current.pathname + @current.search
 
+  attach_ribbon: ->
+    @ribbon = document.createElement('a')
+    @ribbon.href = "https://news.ycombinator.com/item?id=" + @item.id
+    @ribbon.target = "_blank"
+    Util.style(@ribbon, {top: 0, right: 0, position: 'fixed', display: 'block', width: '150px', height: '150px'})
+    @ribbon.innerHTML = '<img src="ribbon.gif">'
+    document.body.appendChild(@ribbon)
+
   check_api: =>
     Util.request("http://api.ihackernews.com/page", {}, callback: @parse_api_response)
 
@@ -74,7 +85,8 @@ class HNjs
       str = @parser.hostname + @parser.pathname + @parser.search
       
       if str == @current_string
-        alert('Rut oh!')
+        @item = item
+        @attach_ribbon()
       else
         console.log("nopies: " + item.url)
 

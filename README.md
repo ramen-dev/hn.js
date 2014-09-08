@@ -50,6 +50,11 @@ This inspiration for this library came from poor Juliabox:
 
 HN.js is licensed under MIT http://www.opensource.org/licenses/MIT
 
+### Credits
+
+* Ribbon GIF came from http://www.quickribbon.com/
+* Most of the Util code was lifted from some [Ramen.js](https://ramen.is) code
+
 ### Copyright
 
 Copyright (c) 2014, Ramen, LLC  
